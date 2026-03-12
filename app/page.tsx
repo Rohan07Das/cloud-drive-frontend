@@ -47,8 +47,8 @@ export default function Home() {
     }, 50);
 
     try {
-      // 3. SEND REAL CREDENTIALS TO FLASK
-      const response = await fetch('http://127.0.0.1:5000/login', {
+      // 3. SEND REAL CREDENTIALS TO FLASK (UPDATED TO LIVE RENDER URL)
+      const response = await fetch('https://cloud-drive-api-ag3g.onrender.com/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -64,8 +64,8 @@ export default function Home() {
         setMessageColor('text-emerald-500');
 
         setTimeout(() => {
-          // Sending the user to Flask and passing the token in the URL!
-          window.location.href = `http://127.0.0.1:5000/?token=${data.token}`;
+          // Sending the user to Flask and passing the token in the URL! (UPDATED TO LIVE RENDER URL)
+          window.location.href = `https://cloud-drive-api-ag3g.onrender.com/?token=${data.token}`;
         }, 1500);
 
       } else {
@@ -159,6 +159,7 @@ export default function Home() {
                 id="email" 
                 value={email}
                 onChange={(e) => setEmail(e.target.value)} 
+                suppressHydrationWarning
                 className="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-4 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0de4b9] focus:bg-white transition-all font-medium text-sm"
                 placeholder="Enter your email"
               />
@@ -171,6 +172,7 @@ export default function Home() {
                 id="password" 
                 value={password}
                 onChange={(e) => setPassword(e.target.value)} 
+                suppressHydrationWarning
                 className="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-4 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0de4b9] focus:bg-white transition-all font-medium text-sm"
                 placeholder="Enter your password"
               />
