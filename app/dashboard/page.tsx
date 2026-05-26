@@ -22,7 +22,7 @@ const socialItems = [
 ];
 
 const SUPABASE_URL = "https://kfjhespnobypmizhpszd.supabase.co";
-const API_URL = "http://127.0.0.1:5000"; // Local target link
+const API_URL = "https://cloud-drive-api-ag3g.onrender.com"; // Local target link
 
 export default function Dashboard() {
   const router = useRouter();
