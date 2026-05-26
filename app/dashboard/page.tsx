@@ -461,7 +461,7 @@ const goBackHome = () => {
     return 'grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3';
   };
   const getItemsPerPage = () => {
-  // 4 ROWS MAX
+  // 2 ROWS MAX
 
   if (view === 'row') {
     return 8;
@@ -469,19 +469,19 @@ const goBackHome = () => {
 
   // SMALL
   if (cardSize === 'sm') {
-    // lg=6 cols → 6 x 4 rows
-    return 24;
+    // lg=6 cols → 6 x 2 rows
+    return 12;
   }
 
   // MEDIUM
   if (cardSize === 'md') {
-    // lg=4 cols → 4 x 4 rows
-    return 16;
+    // lg=4 cols → 4 x 2 rows
+    return 8;
   }
 
   // LARGE
-  // lg=3 cols → 3 x 4 rows
-  return 12;
+  // lg=3 cols → 3 x 2 rows
+  return 6;
 };
 
 const itemsPerPage = getItemsPerPage();
