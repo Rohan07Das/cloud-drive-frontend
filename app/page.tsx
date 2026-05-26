@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from 'react';
+import { useRouter } from 'next/navigation'; // Imported for internal redirection
 import DotGrid from '@/components/DotGrid';
 import { Space_Grotesk } from 'next/font/google';
 
@@ -10,6 +11,7 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export default function Home() {
+  const router = useRouter(); // Initialize the Next.js router
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [botMessage, setBotMessage] = useState<string | null>(null);
@@ -47,8 +49,8 @@ export default function Home() {
     }, 50);
 
     try {
-      // 3. SEND REAL CREDENTIALS TO FLASK (UPDATED TO LIVE RENDER URL)
-      const response = await fetch('https://cloud-drive-api-ag3g.onrender.com/login', {
+      // 3. SEND REAL CREDENTIALS TO FLASK/FASTAPI (LIVE RENDER URL)
+      const response = await fetch('http://127.0.0.1:5000/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -59,17 +61,20 @@ export default function Home() {
       const data = await response.json();
 
       if (response.ok) {
-        // 4. SUCCESS: TELEPORT TO DASHBOARD WITH TOKEN
+        // 4. SUCCESS: STORE TOKEN AND TRANSITION INTERNALLY
         setBotMessage("Access Granted! Teleporting to dashboard...");
         setMessageColor('text-emerald-500');
 
+        // Save the received token securely to localStorage for your dashboard to grab
+        localStorage.setItem('cloud_token', data.token);
+
         setTimeout(() => {
-          // Sending the user to Flask and passing the token in the URL! (UPDATED TO LIVE RENDER URL)
-          window.location.href = `https://cloud-drive-api-ag3g.onrender.com/?token=${data.token}`;
+          // Push the route internally to your new Next.js dashboard route (/app/dashboard/page.tsx)
+          router.push('/dashboard');
         }, 1500);
 
       } else {
-        // 5. SUPABASE REJECTED LOGIN (Wrong password, etc.)
+        // 5. REJECTED LOGIN (Wrong password, etc.)
         setBotMessage(data.error || "Oops! Invalid ID or password.");
         setMessageColor('text-red-500');
         messageTimeoutRef.current = setTimeout(() => setBotMessage(null), 4000);
