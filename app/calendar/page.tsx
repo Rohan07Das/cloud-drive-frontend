@@ -17,8 +17,8 @@ const menuItems = [
 ];
 
 const socialItems = [
-  { label: 'GitHub', link: 'https://github.com' },
-  { label: 'LinkedIn', link: 'https://linkedin.com' }
+  { label: 'GitHub', link: 'https://github.com/Rohan07Das' },
+  { label: 'LinkedIn', link: 'https://www.linkedin.com/in/rohan-lal-das-87b1332a5' }
 ];
 
 const months = [
@@ -263,7 +263,7 @@ export default function CalendarPage() {
               <div className="absolute right-0 mt-3 w-56 bg-white border-2 border-[#161513] rounded-[1.7rem] p-4 shadow-[5px_5px_0px_0px_rgba(22,21,19,1)]">
                 <div className="flex items-center gap-3 pb-4 border-b border-slate-200">
                   <div className="w-12 h-12 rounded-2xl bg-[#161513] text-white flex items-center justify-center text-sm font-black uppercase">{username.charAt(0)}</div>
-                  <div className="min-w-0"><p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Account</p><h4 className="text-sm font-black text-[#161513] truncate">{username}</h4></div>
+                  <div className="min-w-0"><p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Account</p><h4 className="text-sm font-black text-[#161513] truncate">Rohan</h4></div>
                 </div>
                 <button 
   onClick={logout} 

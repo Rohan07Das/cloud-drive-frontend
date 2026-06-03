@@ -16,14 +16,15 @@ const menuItems = [
 ];
 
 const socialItems = [
-  { label: 'GitHub', link: 'https://github.com' },
-  { label: 'LinkedIn', link: 'https://linkedin.com' }
+  { label: 'GitHub', link: 'https://github.com/Rohan07Das' },
+  { label: 'LinkedIn', link: 'https://www.linkedin.com/in/rohan-lal-das-87b1332a5' }
 ];
 
 export default function ContactPage() {
   const router = useRouter();
   const [formState, setFormState] = useState({ name: '', email: '', message: '' });
   const [isAccountOpen, setIsAccountOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false); // Loader state
   const [username, setUsername] = useState(() => {
     if (typeof window !== 'undefined') {
       return localStorage.getItem('cloud_username') || 'Guest';
@@ -33,13 +34,45 @@ export default function ContactPage() {
 
   const logout = () => {
     localStorage.removeItem('cloud_token');
+    localStorage.removeItem('cloud_username');
     router.push('/');
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // ─── CONNECTED API PIPELINE ACTION ───
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert("Message encryption dispatched successfully into transmission buffers.");
-    setFormState({ name: '', email: '', message: '' });
+    setIsSubmitting(true);
+
+    // Dynamic environmental resolution for localhost or server environments
+    const BACKEND_ENDPOINT = process.env.NEXT_PUBLIC_BACKEND_URL || "http://127.0.0.1:5000/api/contact"; 
+
+    // Grab active login token from storage array
+    const token = typeof window !== 'undefined' ? localStorage.getItem('cloud_token') : null;
+
+    try {
+      const response = await fetch(BACKEND_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}` // Pass token securely inside standard header
+        },
+        body: JSON.stringify(formState),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("✨ Message encryption dispatched successfully into transmission buffers! Check your email.");
+        setFormState({ name: '', email: '', message: '' });
+      } else {
+        alert(`❌ Gateway Error: ${data.details || data.error || JSON.stringify(data)}`);
+      }
+    } catch (error) {
+      console.error("Transmission interruption:", error);
+      alert("💥 System network error. Verify that your backend server is up and routing properly.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   // ─── ONEKO CURSOR MASCOT CONTROLLER INTERSECTION ───
@@ -83,7 +116,6 @@ export default function ContactPage() {
             el.style.backgroundPosition = `${sprites.alert[0][0] * 32}px ${sprites.alert[0][1] * 32}px`;
             iTime = Math.max(iTime - 1, 0);
           } else {
-            /* ─── FIXED DIAGONAL DIRECTION MATRIX LOGIC ─── */
             let dir = "";
             if (dY / dist > 0.3) dir += "N";
             else if (dY / dist < -0.3) dir += "S";
@@ -106,7 +138,6 @@ export default function ContactPage() {
   return (
     <div className={`min-h-screen bg-[#f7f5ee] text-[#111111] antialiased flex flex-col overflow-hidden ${spaceGrotesk.className}`}>
       
-      {/* ─── STYLES INJECTION BLOCK (ONEKO STYLING OVERLAY) ─── */}
       <style dangerouslySetInnerHTML={{__html: `
         #oneko {
           position: fixed;
@@ -123,13 +154,11 @@ export default function ContactPage() {
         }
       `}} />
 
-      {/* ─── FLOATING BLUR HEADER LAYER (MATCHES DASHBOARD) ─── */}
       <div className="fixed top-0 left-0 w-full z-[110]">
         <div className="absolute inset-0 h-[40px] bg-[#f7f5ee]/55 backdrop-blur-md border-b border-black/5 shadow-[0_10px_30px_rgba(0,0,0,0.03)]" />
         
         <div className="fixed top-1 right-30 z-[120]">
           <div className="relative">
-            {/* UPDATED PROFILE ACCOUNT BUTTON TO MATCH THE CALENDAR ARROW BUTTON HOVER AND ACTIVE TRANSLATION PATTERNS */}
             <button
               onClick={() => setIsAccountOpen(!isAccountOpen)}
               className="w-12 h-7.5 rounded-2xl border-2 border-[#161513] bg-white shadow-[4px_4px_0px_0px_rgba(22,21,19,1)] flex items-center justify-center hover:bg-slate-50 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0px_0px_rgba(22,21,19,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)] transition-all"
@@ -152,17 +181,16 @@ export default function ContactPage() {
                   </div>
                 </div>
                 <button 
-  onClick={logout} 
-  className="mt-4 w-full py-3 rounded-2xl border-2 border-[#161513] bg-white text-[#161513] text-xs font-black uppercase tracking-[0.18em] transition-all shadow-[4px_4px_0px_0px_rgba(22,21,19,1)] hover:bg-red-500 hover:text-white hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0px_0px_rgba(22,21,19,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]"
->
-  Logout
-</button>
+                  onClick={logout} 
+                  className="mt-4 w-full py-3 rounded-2xl border-2 border-[#161513] bg-white text-[#161513] text-xs font-black uppercase tracking-[0.18em] transition-all shadow-[4px_4px_0px_0px_rgba(22,21,19,1)] hover:bg-red-500 hover:text-white hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0px_0px_rgba(22,21,19,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]"
+                >
+                  Logout
+                </button>
               </div>
             )}
           </div>
         </div>
 
-        {/* STAGGERED MENU EMBED */}
         <div className="fixed inset-0 z-[100] pointer-events-none">
           <StaggeredMenu
             position="left"
@@ -179,15 +207,11 @@ export default function ContactPage() {
         </div>
       </div>
 
-      {/* ─── MAIN CONTENT CONTAINER ─── */}
       <main className="flex-1 min-w-0 p-6 sm:p-10 md:p-12 pl-6 sm:pl-[40px] pt-20">
-        
-        {/* BLACK NAVIGATION HEADER BAR (MATCHES PROPORTIONS EXACTLY) */}
         <header className="flex items-center justify-between gap-4 mb-8 bg-[#161513] text-[#f7f5ee] px-8 py-3.5 rounded-2xl border-2 border-[#161513] shadow-[0_10px_30px_rgba(0,0,0,0.05)]">
           <div className="flex items-center gap-4">
             <h1 className="text-xl font-black uppercase tracking-tight">Cloud Drive</h1>
           </div>
-          
           <div className="flex items-center gap-6 text-xs font-black uppercase tracking-wider text-slate-300">
             <span className="hidden sm:inline opacity-60">Secure Vault</span>
             <button onClick={() => router.push('/dashboard')} className="px-4 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white transition font-black">
@@ -196,7 +220,6 @@ export default function ContactPage() {
           </div>
         </header>
 
-        {/* WORKSPACE CONTENT AREA */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
           <h2 className="text-5xl font-black tracking-tighter text-slate-900">お問い合わせ</h2>
         </div>
@@ -212,15 +235,13 @@ export default function ContactPage() {
             <div className="bg-[#ebd2cc] text-[#111111] border-2 border-[#161513] rounded-[2rem] p-6 shadow-[5px_5px_0px_0px_rgba(22,21,19,1)]">
               <h3 className="text-xl font-black tracking-tight mb-2 uppercase">External Socials</h3>
               <div className="flex flex-col gap-2 mt-2">
-                <a href="https://github.com" target="_blank" rel="noreferrer" className="text-xs font-black uppercase tracking-wider hover:underline">→ GitHub Repository</a>
-                <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="text-xs font-black uppercase tracking-wider hover:underline">→ LinkedIn Networking</a>
+                <a href="https://github.com/Rohan07Das" target="_blank" rel="noreferrer" className="text-xs font-black uppercase tracking-wider hover:underline">→ GitHub Repository</a>
+                <a href="https://www.linkedin.com/in/rohan-lal-das-87b1332a5" target="_blank" rel="noreferrer" className="text-xs font-black uppercase tracking-wider hover:underline">→ LinkedIn Networking</a>
               </div>
             </div>
           </div>
 
           <form onSubmit={handleSubmit} className="relative overflow-hidden md:col-span-2 bg-[#000000] border-2 border-[#161513] rounded-[2rem] p-8 shadow-[5px_5px_0px_0px_rgba(22,21,19,1)] space-y-6">
-            
-            {/* ─── WALLPAPER IMAGE OVERLAY CONFIGURATION ─── */}
             <div 
               className="absolute inset-0 z-0 pointer-events-none select-none"
               style={{
@@ -231,7 +252,6 @@ export default function ContactPage() {
               }}
             />
 
-            {/* HEADER TEXT FIELD LAYER */}
             <h3 className="relative z-10 text-2xl font-black tracking-tight text-white mix-blend-difference">
               Dispatch Transmission
             </h3>
@@ -240,18 +260,18 @@ export default function ContactPage() {
               <div className="space-y-1.5">
                 <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Identity Name</label>
                 <input 
-                  type="text" required value={formState.name}
+                  type="text" required value={formState.name} disabled={isSubmitting}
                   onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl border-2 border-[#161513] bg-white/95 font-bold text-sm outline-none focus:bg-white transition-colors text-slate-900 placeholder-slate-400"
+                  className="w-full px-4 py-3 rounded-xl border-2 border-[#161513] bg-white/95 font-bold text-sm outline-none focus:bg-white transition-colors text-slate-900 placeholder-slate-400 disabled:opacity-50"
                   placeholder="Your Name"
                 />
               </div>
               <div className="space-y-1.5">
                 <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Routing Email</label>
                 <input 
-                  type="email" required value={formState.email}
+                  type="email" required value={formState.email} disabled={isSubmitting}
                   onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl border-2 border-[#161513] bg-white/95 font-bold text-sm outline-none focus:bg-white transition-colors text-slate-900 placeholder-slate-400"
+                  className="w-full px-4 py-3 rounded-xl border-2 border-[#161513] bg-white/95 font-bold text-sm outline-none focus:bg-white transition-colors text-slate-900 placeholder-slate-400 disabled:opacity-50"
                   placeholder="email@example.com"
                 />
               </div>
@@ -260,19 +280,20 @@ export default function ContactPage() {
             <div className="relative z-10 space-y-1.5">
               <label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Payload Message Content</label>
               <textarea 
-                rows={5} required value={formState.message}
+                rows={5} required value={formState.message} disabled={isSubmitting}
                 onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl border-2 border-[#161513] bg-white/95 font-bold text-sm outline-none focus:bg-white transition-colors resize-none text-slate-900 placeholder-slate-400"
+                className="w-full px-4 py-3 rounded-xl border-2 border-[#161513] bg-white/95 font-bold text-sm outline-none focus:bg-white transition-colors resize-none text-slate-900 placeholder-slate-400 disabled:opacity-50"
                 placeholder="Write your message here..."
               />
             </div>
 
             <button 
-  type="submit" 
-  className="relative z-10 w-full sm:w-auto px-8 py-4 rounded-xl bg-white text-[#161513] border-2 border-[#161513] font-black text-xs uppercase tracking-widest transition-all duration-100 shadow-[4px_4px_0px_0px_rgba(244,197,66,1)] hover:bg-slate-50 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0px_0px_rgba(244,197,66,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(244,197,66,0)]"
->
-  Submit Message Node
-</button>
+              type="submit" 
+              disabled={isSubmitting}
+              className="relative z-10 w-full sm:w-auto px-8 py-4 rounded-xl bg-white text-[#161513] border-2 border-[#161513] font-black text-xs uppercase tracking-widest transition-all duration-100 shadow-[4px_4px_0px_0px_rgba(244,197,66,1)] hover:bg-slate-50 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0px_0px_rgba(244,197,66,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(244,197,66,0)] disabled:opacity-50 disabled:pointer-events-none"
+            >
+              {isSubmitting ? "Transmitting..." : "Submit Message Node"}
+            </button>
           </form>
         </div>
       </main>
