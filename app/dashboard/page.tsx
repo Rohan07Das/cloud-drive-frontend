@@ -496,70 +496,45 @@ const paginatedFiles = files.slice(startIndex, endIndex);
   return (
     <div className={`min-h-screen bg-[#f7f5ee] text-[#111111] antialiased flex overflow-hidden ${spaceGrotesk.className}`}>
 
-      {/* ─── ACCOUNT PROFILE DROPDOWN ─── */}
-      {/*FLOATING BLUR HEADER LAYER*/}
-<div className="fixed top-0 left-0 w-full z-[110]">
-  
-  {/* BACKDROP BLUR STRIP */}
-  <div className="
-    absolute inset-0
-    h-[40px]
-    bg-[#f7f5ee]/55
-    backdrop-blur-md
-    border-b border-black/5
-    shadow-[0_10px_30px_rgba(0,0,0,0.03)]
-  " />
-<div className="fixed top-1 right-30 z-[120]">
-  <div className="relative">
-    
-    {/* ACCOUNT ICON BUTTON */}
-    <button
-      onClick={() => setIsAccountOpen(!isAccountOpen)}
-      className="w-12 h-7.5 rounded-2xl border-2 border-[#161513] bg-white shadow-[4px_4px_0px_0px_rgba(22,21,19,1)] flex items-center justify-center hover:translate-y-0.5 transition-all"
-    >
-      <svg
-        viewBox="0 0 24 24"
-        className="w-5 h-5 stroke-[#161513] fill-none"
-        strokeWidth="2.2"
-      >
-        <path d="M20 21C20 17.134 16.866 14 13 14H11C7.134 14 4 17.134 4 21" />
-        <circle cx="12" cy="7" r="4" />
-      </svg>
-    </button>
-
-    {/* DROPDOWN PANEL */}
-    {isAccountOpen && (
-      <div className="absolute right-0 mt-3 w-56 bg-white border-2 border-[#161513] rounded-[1.7rem] p-4 shadow-[5px_5px_0px_0px_rgba(22,21,19,1)] animate-fadeIn">
+      {/* ─── FLOATING BLUR HEADER LAYER (MATCHES DASHBOARD) ─── */}
+      <div className="fixed top-0 left-0 w-full z-[110]">
+        <div className="absolute inset-0 h-[40px] bg-[#f7f5ee]/55 backdrop-blur-md border-b border-black/5 shadow-[0_10px_30px_rgba(0,0,0,0.03)]" />
         
-        {/* USER INFO */}
-        <div className="flex items-center gap-3 pb-4 border-b border-slate-200">
-          
-          <div className="w-12 h-12 rounded-2xl bg-[#161513] text-white flex items-center justify-center text-sm font-black uppercase">
-            {username.charAt(0)}
-          </div>
+        <div className="fixed top-1 right-30 z-[120]">
+          <div className="relative">
+            {/* UPDATED PROFILE ACCOUNT BUTTON TO MATCH THE CALENDAR ARROW BUTTON HOVER AND ACTIVE TRANSLATION PATTERNS */}
+            <button
+              onClick={() => setIsAccountOpen(!isAccountOpen)}
+              className="w-12 h-7.5 rounded-2xl border-2 border-[#161513] bg-white shadow-[4px_4px_0px_0px_rgba(22,21,19,1)] flex items-center justify-center hover:bg-slate-50 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0px_0px_rgba(22,21,19,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)] transition-all"
+            >
+              <svg viewBox="0 0 24 24" className="w-5 h-5 stroke-[#161513] fill-none" strokeWidth="2.2">
+                <path d="M20 21C20 17.134 16.866 14 13 14H11C7.134 14 4 17.134 4 21" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+            </button>
 
-          <div className="min-w-0">
-            <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">
-              Account
-            </p>
-
-            <h4 className="text-sm font-black text-[#161513] truncate">
-              {username}
-            </h4>
+            {isAccountOpen && (
+              <div className="absolute right-0 mt-3 w-56 bg-white border-2 border-[#161513] rounded-[1.7rem] p-4 shadow-[5px_5px_0px_0px_rgba(22,21,19,1)]">
+                <div className="flex items-center gap-3 pb-4 border-b border-slate-200">
+                  <div className="w-12 h-12 rounded-2xl bg-[#161513] text-white flex items-center justify-center text-sm font-black uppercase">
+                    {username.charAt(0)}
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Account</p>
+                    <h4 className="text-sm font-black text-[#161513] truncate">{username}</h4>
+                  </div>
+                </div>
+                <button 
+  onClick={logout} 
+  className="mt-4 w-full py-3 rounded-2xl border-2 border-[#161513] bg-white text-[#161513] text-xs font-black uppercase tracking-[0.18em] transition-all shadow-[4px_4px_0px_0px_rgba(22,21,19,1)] hover:bg-red-500 hover:text-white hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0px_0px_rgba(22,21,19,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]"
+>
+  Logout
+</button>
+              </div>
+            )}
           </div>
         </div>
 
-        {/* LOGOUT BUTTON */}
-        <button
-          onClick={logout}
-          className="mt-4 w-full py-3 rounded-2xl bg-[#161513] hover:bg-black text-white text-xs font-black uppercase tracking-[0.18em] transition-all shadow-md"
-        >
-          Logout
-        </button>
-      </div>
-    )}
-  </div>
-</div>
       {/* ─── STAGGERED MENU COMPONENT ─── */}
       <div className="fixed inset-0 z-[100] pointer-events-none">
         <StaggeredMenu
@@ -765,93 +740,164 @@ const paginatedFiles = files.slice(startIndex, endIndex);
         </header>
 
         {/* CONTROLLER FILTERS RULER BAR */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
-          <div className="flex items-center gap-2">
-            <h2 className="text-5xl font-black tracking-tighter mr-4 leading-none text-slate-900">おかえりなさい</h2>
-            <button onClick={() => setActiveFilter('all')} className="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest border border-black bg-black text-white shadow-sm">
-              Filter ({files.length})
-            </button>
-            <button
+<div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
+  <div className="flex items-center gap-3 flex-wrap">
+    <h2 className="text-5xl font-black tracking-tighter mr-4 leading-none text-slate-900">おかえりなさい</h2>
+    
+    {/* FILTER TOGGLE BUTTON */}
+    <button 
+      onClick={() => setActiveFilter('all')} 
+      className={`px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest border-2 border-[#161513] transition-all duration-100 ${
+        activeFilter === 'all'
+          ? 'bg-[#161513] text-white shadow-none translate-y-0.5'
+          : 'bg-white text-[#161513] shadow-[3px_3px_0px_0px_rgba(22,21,19,1)] hover:bg-slate-50 active:translate-y-0.5 active:shadow-[1px_1px_0px_0px_rgba(22,21,19,1)]'
+      }`}
+    >
+      Filter ({files.length})
+    </button>
+
+    {/* FOLDERS TOGGLE BUTTON */}
+    <button
   onClick={() => {
     setShowFolders(true);
     setCurrentFolder(null);
   }}
-  className="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest bg-white border border-slate-200 hover:border-black text-slate-800 transition"
+  className={`px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest border-2 border-[#161513] transition-all duration-100 ${
+    showFolders && currentFolder === null
+      ? 'bg-[#161513] text-white translate-x-1 translate-y-1 shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]'
+      : 'bg-white text-[#161513] shadow-[3px_3px_0px_0px_rgba(22,21,19,1)] hover:bg-slate-50 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[1.5px_1.5px_0px_0px_rgba(22,21,19,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]'
+  }`}
 >
   Folders
 </button>
-            <button className="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest bg-white border border-slate-200 hover:border-black text-slate-800 transition">Favorites</button>
-          </div>
+  </div>
 
           {/* COMBINED TOGGLE CONTROL GROUP */}
           <div className="flex items-center gap-4">
             
-            {/* ─── FIXED UNIFORM SELECTOR CAPSULES FOR S, M, L SIZES ─── */}
-            {view === 'grid' && (
-              <div className="flex bg-white p-1 rounded-xl border border-slate-200 shadow-sm text-[10px] font-black tracking-wider uppercase">
-                <button 
-                  onClick={() => setCardSize('sm')} 
-                  className={`w-8 h-8 rounded-lg transition-all font-black text-xs ${cardSize === 'sm' ? 'bg-[#161513] text-white shadow-md' : 'text-slate-500 hover:text-black'}`}
-                >
-                  S
-                </button>
-                <button 
-                  onClick={() => setCardSize('md')} 
-                  className={`w-8 h-8 rounded-lg transition-all font-black text-xs ${cardSize === 'md' ? 'bg-[#161513] text-white shadow-md' : 'text-slate-500 hover:text-black'}`}
-                >
-                  M
-                </button>
-                <button 
-                  onClick={() => setCardSize('lg')} 
-                  className={`w-8 h-8 rounded-lg transition-all font-black text-xs ${cardSize === 'lg' ? 'bg-[#161513] text-white shadow-md' : 'text-slate-500 hover:text-black'}`}
-                >
-                  L
-                </button>
-              </div>
-            )}
+            {/* ─── FIXED UNIFORM SELECTOR CAPSULES FOR S, M, L SIZES WITH INDEPENDENT CLICK ANIMATIONS ─── */}
+{view === 'grid' && (
+  <div className="flex bg-[#f7f5ee] p-1.5 rounded-xl border-2 border-[#161513] items-center gap-2 text-[10px] font-black tracking-wider uppercase shadow-[3px_3px_0px_0px_rgba(22,21,19,1)]">
+    <button 
+  onClick={() => setCardSize('sm')} 
+  className={`w-8 h-8 rounded-lg font-black text-xs transition-all duration-100 border-2 border-[#161513] ${
+    cardSize === 'sm' 
+      ? 'bg-[#161513] text-white translate-x-1 translate-y-1 shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]' 
+      : 'bg-white text-[#161513] shadow-[2px_2px_0px_0px_rgba(22,21,19,1)] hover:bg-slate-50 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[1px_1px_0px_0px_rgba(22,21,19,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]'
+  }`}
+>
+  S
+</button>
 
-            {/* ─── INTEGRATED VIEW TOGGLES FEATURING ICON GRAPHICS SYMBOLS INSIDE ─── */}
-            <div className="flex bg-white p-1 rounded-xl border border-slate-200 shadow-sm">
-              <button 
-                onClick={() => setView('grid')} 
-                className={`p-2 rounded-lg transition-all ${view === 'grid' ? 'bg-[#161513] text-white shadow-md' : 'text-slate-700 hover:bg-neutral-100'}`}
-                title="Grid Layout View"
-              >
-                <svg viewBox="0 0 24 24" className="w-4 h-4 fill-none stroke-currentColor" strokeWidth="2.5">
-                  <rect x="3" y="3" width="7" height="7" />
-                  <rect x="14" y="3" width="7" height="7" />
-                  <rect x="14" y="14" width="7" height="7" />
-                  <rect x="3" y="14" width="7" height="7" />
-                </svg>
-              </button>
-              <button 
-                onClick={() => setView('row')} 
-                className={`p-2 rounded-lg transition-all ${view === 'row' ? 'bg-[#161513] text-white shadow-md' : 'text-slate-700 hover:bg-neutral-100'}`}
-                title="Row List View"
-              >
-                <svg viewBox="0 0 24 24" className="w-4 h-4 fill-none stroke-currentColor" strokeWidth="2.5">
-                  <line x1="8" y1="6" x2="21" y2="6" />
-                  <line x1="8" y1="12" x2="21" y2="12" />
-                  <line x1="8" y1="18" x2="21" y2="18" />
-                  <circle cx="4" cy="6" r="1.25" fill="currentColor" />
-                  <circle cx="4" cy="12" r="1.25" fill="currentColor" />
-                  <circle cx="4" cy="18" r="1.25" fill="currentColor" />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
+<button 
+  onClick={() => setCardSize('md')} 
+  className={`w-8 h-8 rounded-lg font-black text-xs transition-all duration-100 border-2 border-[#161513] ${
+    cardSize === 'md' 
+      ? 'bg-[#161513] text-white translate-x-1 translate-y-1 shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]' 
+      : 'bg-white text-[#161513] shadow-[2px_2px_0px_0px_rgba(22,21,19,1)] hover:bg-slate-50 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[1px_1px_0px_0px_rgba(22,21,19,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]'
+  }`}
+>
+  M
+</button>
+
+<button 
+  onClick={() => setCardSize('lg')} 
+  className={`w-8 h-8 rounded-lg font-black text-xs transition-all duration-100 border-2 border-[#161513] ${
+    cardSize === 'lg' 
+      ? 'bg-[#161513] text-white translate-x-1 translate-y-1 shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]' 
+      : 'bg-white text-[#161513] shadow-[2px_2px_0px_0px_rgba(22,21,19,1)] hover:bg-slate-50 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[1px_1px_0px_0px_rgba(22,21,19,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]'
+  }`}
+>
+  L
+</button>
+  </div>
+)}
+
+            {/* ─── INTEGRATED VIEW TOGGLES FEATURING HARDCODED SYMBOL COLOR VISIBILITY ─── */}
+<div className="flex bg-[#f7f5ee] p-1.5 rounded-xl border-2 border-[#161513] items-center gap-2 shadow-[3px_3px_0px_0px_rgba(22,21,19,1)]">
+  
+  {/* GRID VIEW TOGGLE */}
+<button 
+  onClick={() => setView('grid')} 
+  className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-100 border-2 border-[#161513] ${
+    view === 'grid' 
+      ? 'bg-[#161513] translate-x-1 translate-y-1 shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]' 
+      : 'bg-white shadow-[2px_2px_0px_0px_rgba(22,21,19,1)] hover:bg-slate-50 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[1px_1px_0px_0px_rgba(22,21,19,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]'
+  }`}
+  title="Grid Layout View"
+>
+  <svg viewBox="0 0 24 24" className="w-4 h-4 fill-none" strokeWidth="1.4">
+    <rect 
+      x="3" y="3" width="7" height="7" 
+      className={view === 'grid' ? 'stroke-white' : 'stroke-[#161513]'} 
+    />
+    <rect 
+      x="14" y="3" width="7" height="7" 
+      className={view === 'grid' ? 'stroke-white' : 'stroke-[#161513]'} 
+    />
+    <rect 
+      x="14" y="14" width="7" height="7" 
+      className={view === 'grid' ? 'stroke-white' : 'stroke-[#161513]'} 
+    />
+    <rect 
+      x="3" y="14" width="7" height="7" 
+      className={view === 'grid' ? 'stroke-white' : 'stroke-[#161513]'} 
+    />
+  </svg>
+</button>
+
+{/* LIST ROW VIEW TOGGLE */}
+<button 
+  onClick={() => setView('row')} 
+  className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-100 border-2 border-[#161513] ${
+    view === 'row' 
+      ? 'bg-[#161513] translate-x-1 translate-y-1 shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]' 
+      : 'bg-white shadow-[2px_2px_0px_0px_rgba(22,21,19,1)] hover:bg-slate-50 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[1px_1px_0px_0px_rgba(22,21,19,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]'
+  }`}
+  title="Row List View"
+>
+  <svg viewBox="0 0 24 24" className="w-4 h-4 fill-none" strokeWidth="1.4">
+    <line 
+      x1="8" y1="6" x2="21" y2="6" 
+      className={view === 'row' ? 'stroke-white' : 'stroke-[#161513]'} 
+    />
+    <line 
+      x1="8" y1="12" x2="21" y2="12" 
+      className={view === 'row' ? 'stroke-white' : 'stroke-[#161513]'} 
+    />
+    <line 
+      x1="8" y1="18" x2="21" y2="18" 
+      className={view === 'row' ? 'stroke-white' : 'stroke-[#161513]'} 
+    />
+    <circle 
+      cx="4" cy="6" r="1.2" 
+      className={view === 'row' ? 'fill-white stroke-white' : 'fill-[#161513] stroke-[#161513]'} 
+    />
+    <circle 
+      cx="4" cy="12" r="1.2" 
+      className={view === 'row' ? 'fill-white stroke-white' : 'fill-[#161513] stroke-[#161513]'} 
+    />
+    <circle 
+      cx="4" cy="18" r="1.2" 
+      className={view === 'row' ? 'fill-white stroke-white' : 'fill-[#161513] stroke-[#161513]'} 
+    />
+  </svg>
+</button>
+
+</div>
+</div>
+</div>
 
         {/* COMBINED INTERFACES LAYOUT SIDEBAR + GALLERY */}
         {currentFolder && (
   <div className="mb-6 flex items-center gap-3">
     
     <button
-      onClick={goBackHome}
-      className="px-4 py-2 rounded-xl bg-black text-white text-xs font-black uppercase"
-    >
-      ← Back
-    </button>
+  onClick={goBackHome}
+  className="px-4 py-2 rounded-xl border-2 border-[#161513] bg-white text-[#161513] text-xs font-black uppercase tracking-wider transition-all shadow-[4px_4px_0px_0px_rgba(22,21,19,1)] hover:bg-slate-50 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0px_0px_rgba(22,21,19,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]"
+>
+  ← Back
+</button>
 
     <h3 className="text-2xl font-black tracking-tight">
       📁 {currentFolder}
@@ -861,26 +907,27 @@ const paginatedFiles = files.slice(startIndex, endIndex);
         <div className="flex flex-col lg:flex-row gap-8 items-start">
           
           {/* ASSET UPLOAD CONTROL BOX BENTO */}
-          <div className="w-full lg:w-[320px] shrink-0 bg-white border-2 border-[#161513] rounded-[2rem] p-6 shadow-[5px_5px_0px_0px_rgba(22,21,19,1)]">
-            <h3 className="text-2xl font-black tracking-tight text-slate-900 mb-1.5">Add Assets</h3>
-            <p className="text-xs text-slate-500 mb-8 font-medium leading-relaxed">Add body text to help your document and onyx black.</p>
-            
-            <div className="space-y-4">
-              <label className="w-full block">
-                <input type="file" ref={fileInputRef} className="hidden" onChange={(e) => setSelectedFileName(e.target.files?.[0]?.name || '')} />
-                <div className="w-full text-center p-4 rounded-xl bg-[#f7f5ee] border border-slate-200 hover:border-black transition text-xs font-black text-slate-800 cursor-pointer truncate">
-                  {selectedFileName ? selectedFileName : 'Choose Document'}
-                </div>
-              </label>
+<div className="w-full lg:w-[320px] shrink-0 bg-white border-2 border-[#161513] rounded-[2rem] p-6 shadow-[5px_5px_0px_0px_rgba(22,21,19,1)]">
+  <h3 className="text-2xl font-black tracking-tight text-slate-900 mb-1.5">Add Assets</h3>
+  <p className="text-xs text-slate-500 mb-8 font-medium leading-relaxed">Add any of your document and store.</p>
+  
+  <div className="space-y-5">
+    {/* CHOOSE FILE BUTTON / LABEL */}
+    <label className="w-full block">
+      <input type="file" ref={fileInputRef} className="hidden" onChange={(e) => setSelectedFileName(e.target.files?.[0]?.name || '')} />
+      <div className="w-full text-center p-4 rounded-xl bg-[#f7f5ee] border-2 border-[#161513] text-xs font-black text-slate-800 cursor-pointer truncate transition-all duration-100 shadow-[3px_3px_0px_0px_rgba(22,21,19,1)] hover:bg-[#faf9f5] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[1.5px_1.5px_0px_0px_rgba(22,21,19,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]">
+        {selectedFileName ? selectedFileName : 'Choose Document'}
+      </div>
+    </label>
 
-              <button 
-                onClick={uploadFile}
-                className="w-full py-4 rounded-xl bg-[#161513] hover:bg-black text-white font-black text-xs uppercase tracking-widest transition shadow-md active:translate-y-0.5"
-              >
-                Upload File
-              </button>
-            </div>
-
+    {/* UPLOAD FILE ACTION BUTTON */}
+    <button 
+      onClick={uploadFile}
+      className="w-full py-4 rounded-xl bg-white text-[#161513] border-2 border-[#161513] font-black text-xs uppercase tracking-widest transition-all duration-100 shadow-[4px_4px_0px_0px_rgba(22,21,19,1)] hover:bg-[#4f62f9] hover:text-white hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0px_0px_rgba(22,21,19,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]"
+    >
+      Upload File
+    </button>
+  </div>
             {/* ─── DYNAMIC SWITCH: PROGRESS FEEDBACK VS RUNNING HAMSTER LOADER WHEEL ─── */}
             {isUploading && (
               <div className="mt-8 flex flex-col items-center justify-center p-4 bg-[#f7f5ee] border border-slate-200 rounded-2xl tracking-tight text-center animate-fadeIn">
@@ -916,112 +963,123 @@ const paginatedFiles = files.slice(startIndex, endIndex);
             )}
           </div>
 
-          {/* DYNAMIC ASSETS GALLERY PANEL GRID */}
-          <div className="flex-1 w-full">
-            {files.length === 0 ? (
-              <div className="w-full py-28 bg-white border border-dashed border-slate-300 rounded-[2rem] flex flex-col items-center justify-center text-center p-6 shadow-sm">
-                <p className="text-sm font-black text-slate-400 uppercase tracking-widest">No Objects Found</p>
-              </div>
-            ) : (
-              <div className={view === 'grid' ? `grid ${getGridColumns()} gap-5` : 'flex flex-col gap-4'}>
-                {paginatedFiles.map((file, i) => {
-                  const currentTheme = blockBackgrounds[i % blockBackgrounds.length];
-                  const isImg = ['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(file.name.split('.').pop()?.toLowerCase());
-                 const fileUrl = currentFolder
-  ? `${SUPABASE_URL}/storage/v1/object/public/files/folders/${currentFolder}/${file.name}`
-  : `${SUPABASE_URL}/storage/v1/object/public/files/files/${file.name}`;
+         {/* ─── DYNAMIC ASSETS GALLERY PANEL GRID ─── */}
+<div className="flex-1 w-full">
+  {files.length === 0 ? (
+    <div className="w-full py-28 bg-white border border-dashed border-slate-300 rounded-[2rem] flex flex-col items-center justify-center text-center p-6 shadow-sm">
+      <p className="text-sm font-black text-slate-400 uppercase tracking-widest">No Objects Found</p>
+    </div>
+  ) : (
+    <div className={view === 'grid' ? `grid ${getGridColumns()} gap-5` : 'flex flex-col gap-4'}>
+      {paginatedFiles.map((file, i) => {
+        const currentTheme = blockBackgrounds[i % blockBackgrounds.length];
+        const isImg = ['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(file.name.split('.').pop()?.toLowerCase());
+        const fileUrl = currentFolder
+          ? `${SUPABASE_URL}/storage/v1/object/public/files/folders/${currentFolder}/${file.name}`
+          : `${SUPABASE_URL}/storage/v1/object/public/files/files/${file.name}`;
 
-                  return (
-                    <div 
-                      key={file.name}
-                      className={`rounded-[1.8rem] border-2 border-[#161513] overflow-hidden shadow-[4px_4px_0px_0px_rgba(22,21,19,1)] transition-transform hover:-translate-y-0.5 ${currentTheme} ${
-                        view === 'row' ? 'flex items-center justify-between p-4 gap-4 w-full' : 'flex flex-col w-full'
-                      }`}
-                    >
-                      {/* FILE PREVIEW ASPECT RATIO BOX */}
-                      <div 
-                        onClick={() => openPreview(file.name, currentFolder || undefined)}
-                        className={`relative cursor-pointer overflow-hidden bg-white/70 ${
-                          view === 'row' ? 'w-24 h-16 rounded-2xl border border-slate-300 shrink-0' : 'w-full aspect-[14/10] border-b-2 border-[#161513]'
-                        }`}
-                      >
-                        {isImg ? (
-                          <img src={fileUrl} className="w-full h-full object-cover" alt="" />
-                        ) : (
-                          <div className="w-full h-full flex flex-col items-center justify-center p-2 text-center bg-white">
-                            <span className="text-[20px] font-black text-slate-400/80 leading-none">...</span>
-                          </div>
-                        )}
-                      </div>
+        return (
+          <div 
+            key={file.name}
+            className={`relative rounded-[1.8rem] border-2 border-[#161513] overflow-hidden shadow-[4px_4px_0px_0px_rgba(22,21,19,1)] transition-all duration-100 ${currentTheme} ${
+              view === 'row' ? 'flex items-center justify-between p-4 gap-4 w-full h-24' : 'flex flex-col w-full'
+            }`}
+          >
+            {/* FILE PREVIEW ASPECT RATIO BOX */}
+            <div 
+              onClick={() => openPreview(file.name, currentFolder || undefined)}
+              className={`relative cursor-pointer overflow-hidden bg-white/70 ${
+                view === 'row' ? 'w-24 h-16 rounded-2xl border border-slate-300 shrink-0' : 'w-full aspect-[14/10] border-b-2 border-[#161513]'
+              }`}
+            >
+              {isImg ? (
+                <img src={fileUrl} className="w-full h-full object-cover" alt="" />
+              ) : (
+                <div className="w-full h-full flex flex-col items-center justify-center p-2 text-center bg-white">
+                  <span className="text-[20px] font-black text-slate-400/80 leading-none">...</span>
+                </div>
+              )}
+            </div>
 
-                      {/* INFO CARD LAYOUT TEXT */}
-                      <div className={`p-4 flex flex-col flex-1 truncate ${view === 'row' ? '!p-0' : ''}`}>
-                        <h4 className="text-xs sm:text-sm font-black truncate text-slate-900 mb-0.5 tracking-tight" title={file.name}>
-                          {file.name}
-                        </h4>
-                        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">{formatSize(file.size || file.metadata?.size || 0)}</span>
-                      </div>
+            {/* INFO CARD LAYOUT TEXT */}
+            <div className={`p-4 flex flex-col flex-1 truncate ${view === 'row' ? '!p-0' : ''}`}>
+              <h4 className="text-xs sm:text-sm font-black truncate text-slate-900 mb-0.5 tracking-tight" title={file.name}>
+                {file.name}
+              </h4>
+              <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+                {formatSize(file.size || file.metadata?.size || 0)}
+              </span>
+            </div>
 
-                      {/* CARD CONTROLS ACTION OVERLAY */}
-                      <div className={`flex items-center justify-between gap-3 px-4 pb-4 ${view === 'row' ? '!p-0 shrink-0' : ''}`}>
-                        <button 
-                          onClick={() => downloadFile(file.name, file.size || file.metadata?.size || 0)}
-                          className="px-4 py-1.5 bg-black hover:bg-neutral-800 text-white font-black text-[10px] sm:text-xs uppercase tracking-wider rounded-xl transition shadow-sm"
-                        >
-                          Save
-                        </button>
-                        <button 
-                          onClick={() => deleteFile(file.name)}
-                          className="p-1.5 text-slate-500 hover:text-red-500 transition-colors"
-                        >
-                          <svg viewBox="0 0 24 24" className="w-4 h-4 fill-none stroke-currentColor" strokeWidth="2.5"><polyline points="3 6 5 6 21 6" /><path d="M19 6l-1 14H6L5 6" /></svg>
-                        </button>
-                      </div>
-
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-            {/* PAGINATION */}
+            {/* CARD CONTROLS ACTION FOOTER AREA */}
+            <div className={`flex items-center gap-3 px-4 pb-4 ${view === 'row' ? '!p-0 pr-12 shrink-0' : ''}`}>
+              
+              {/* SAVE BUTTON */}
+             <button 
+  onClick={() => downloadFile(file.name, file.size || file.metadata?.size || 0)}
+  className="px-4 py-1.5 bg-white text-[#161513] border-2 border-[#161513] font-black text-[10px] sm:text-xs uppercase tracking-wider rounded-xl transition-all duration-100 shadow-[3px_3px_0px_0px_rgba(22,21,19,1)] hover:bg-[#4f62f9] hover:text-white hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[1.5px_1.5px_0px_0px_rgba(22,21,19,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]"
+>
+  Save
+</button>
+              {/* REMOVE BUTTON: Moved inline right next to the Save button */}
+             <button
+  onClick={() => deleteFile(file.name)}
+  className="w-6 h-6 rounded-lg border-2 border-[#161513] bg-white flex items-center justify-center font-black text-xs text-[#161513] transition-all duration-100 shadow-[2px_2px_0px_0px_rgba(22,21,19,1)] hover:bg-red-500 hover:text-white hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[1px_1px_0px_0px_rgba(22,21,19,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)] shrink-0"
+  title="Remove Task"
+>
+  ✕
+</button>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  )}
+           {/* PAGINATION */}
 {totalPages > 1 && (
   <div className="mt-10 flex items-center justify-center gap-3 flex-wrap">
     
+    {/* PREV BUTTON */}
     <button
       onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
       disabled={currentPage === 1}
-      className={`px-4 py-2 rounded-xl border-2 border-[#161513] text-xs font-black uppercase tracking-wider transition ${
+      className={`px-4 py-2 rounded-xl border-2 border-[#161513] text-xs font-black uppercase tracking-wider transition-all duration-100 ${
         currentPage === 1
-          ? 'opacity-40 cursor-not-allowed bg-slate-200'
-          : 'bg-white hover:bg-black hover:text-white'
+          ? 'opacity-40 cursor-not-allowed bg-slate-200 shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]'
+          : 'bg-white text-[#161513] shadow-[3px_3px_0px_0px_rgba(22,21,19,1)] hover:bg-slate-50 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[1.5px_1.5px_0px_0px_rgba(22,21,19,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]'
       }`}
     >
       Prev
     </button>
 
-    {Array.from({ length: totalPages }, (_, i) => (
-      <button
-        key={i}
-        onClick={() => setCurrentPage(i + 1)}
-        className={`w-10 h-10 rounded-xl border-2 border-[#161513] text-xs font-black transition ${
-          currentPage === i + 1
-            ? 'bg-[#161513] text-white'
-            : 'bg-white hover:bg-black hover:text-white'
-        }`}
-      >
-        {i + 1}
-      </button>
-    ))}
+    {/* NUMBERED PAGE TOGGLES */}
+    {Array.from({ length: totalPages }, (_, i) => {
+      const isSelected = currentPage === i + 1;
+      return (
+        <button
+          key={i}
+          onClick={() => setCurrentPage(i + 1)}
+          className={`w-10 h-10 rounded-xl border-2 border-[#161513] text-xs font-black transition-all duration-100 ${
+            isSelected
+              ? 'bg-[#161513] text-white translate-x-1 translate-y-1 shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]'
+              : 'bg-white text-[#161513] shadow-[3px_3px_0px_0px_rgba(22,21,19,1)] hover:bg-slate-50 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[1.5px_1.5px_0px_0px_rgba(22,21,19,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]'
+          }`}
+        >
+          {i + 1}
+        </button>
+      );
+    })}
 
+    {/* NEXT BUTTON */}
     <button
       onClick={() =>
         setCurrentPage((p) => Math.min(p + 1, totalPages))
       }
       disabled={currentPage === totalPages}
-      className={`px-4 py-2 rounded-xl border-2 border-[#161513] text-xs font-black uppercase tracking-wider transition ${
+      className={`px-4 py-2 rounded-xl border-2 border-[#161513] text-xs font-black uppercase tracking-wider transition-all duration-100 ${
         currentPage === totalPages
-          ? 'opacity-40 cursor-not-allowed bg-slate-200'
-          : 'bg-white hover:bg-black hover:text-white'
+          ? 'opacity-40 cursor-not-allowed bg-slate-200 shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]'
+          : 'bg-white text-[#161513] shadow-[3px_3px_0px_0px_rgba(22,21,19,1)] hover:bg-slate-50 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[1.5px_1.5px_0px_0px_rgba(22,21,19,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]'
       }`}
     >
       Next
@@ -1030,7 +1088,6 @@ const paginatedFiles = files.slice(startIndex, endIndex);
   </div>
 )}
           </div>
-
         </div>
 
         {/* BOTTOM PLACEHOLDER SPACE */}
@@ -1053,54 +1110,71 @@ const paginatedFiles = files.slice(startIndex, endIndex);
           </div>
         )}
 
-        {/* RECYCLE ARCHIVE DIALOG SHEET BAR */}
-        {isRecycleOpen && (
-          <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 flex items-center justify-center p-4 animate-fadeIn" onClick={() => setIsRecycleOpen(false)}>
-            <div className="w-full max-w-md bg-white border border-black rounded-[2rem] p-6 shadow-2xl" onClick={(e) => e.stopPropagation()}>
-              <div className="flex justify-between items-center pb-4 border-b border-slate-200 mb-4">
-                <span className="text-sm font-black uppercase tracking-widest text-slate-800">Archive Log Registry</span>
-                <button onClick={() => setIsRecycleOpen(false)} className="text-black font-black text-sm hover:scale-105 transition">✕</button>
-              </div>
-              <div className="max-h-60 overflow-y-auto space-y-3 pr-1">
-                {recycleFiles.length === 0 ? (
-                  <div className="text-center py-10 text-xs font-black uppercase tracking-widest text-slate-400">Archive log is empty</div>
-                ) : (
-                  recycleFiles.map((file) => (
-                    <div key={`${file.folder || 'root'}-${file.name}`}className="flex items-center justify-between p-4 rounded-2xl bg-[#f7f5ee] border border-slate-200 shadow-sm">
-                      <span className="text-xs font-black text-black truncate pr-4 max-w-[180px]">{file.name}</span>
-                      <div className="flex gap-2">
-                        <button 
-  onClick={async () => {
+       {/* RECYCLE ARCHIVE DIALOG SHEET BAR */}
+{isRecycleOpen && (
+  <div className="fixed inset-0 bg-[#161513]/40 backdrop-blur-xs z-[200] flex items-center justify-center p-4 animate-fadeIn" onClick={() => setIsRecycleOpen(false)}>
+    {/* Dynamic Backdrop Screen Layer Mask is managed implicitly by outer absolute wrapping configurations */}
+    
+    {/* CONTAINER FRAME OVERHAUL: Replicated structural matching configurations from Create Task Node */}
+    <div 
+      className="relative w-full max-w-md bg-white border-4 border-[#161513] rounded-[2.5rem] p-8 shadow-[8px_8px_0px_0px_rgba(22,21,19,1)] z-10 transform transition-all" 
+      onClick={(e) => e.stopPropagation()}
+    >
+      
+      {/* HEADER ROW WITH SYNCED UNDERLINE LAYOUT FORMAT */}
+      <div className="flex items-center justify-between border-b-2 border-[#161513] pb-4 mb-6">
+        <span className="text-2xl font-black uppercase tracking-tight text-[#161513]">Archive Log Registry</span>
+        
+        {/* CLOSE CONTROL ACTION COMPONENT */}
+        <button
+          onClick={() => setIsRecycleOpen(false)}
+          className="w-8 h-8 rounded-lg border-2 border-[#161513] bg-white text-[#161513] font-black flex items-center justify-center text-sm transition-all duration-100 shadow-[3px_3px_0px_0px_rgba(22,21,19,1)] hover:bg-red-500 hover:text-white hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[1.5px_1.5px_0px_0px_rgba(22,21,19,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]"
+        >
+          ✕
+        </button>
+      </div>
 
-    const url = file.folder
-      ? `${API_URL}/restore-folder-file/${file.folder}/${file.name}`
-      : `${API_URL}/restore/${file.name}`;
+      {/* INNER LIST VIEW CONTENT WRAPPER */}
+      <div className="max-h-60 overflow-y-auto space-y-3 pr-1">
+        {recycleFiles.length === 0 ? (
+          <div className="text-center py-10 text-xs font-black uppercase tracking-widest text-slate-400">Archive log is empty</div>
+        ) : (
+          recycleFiles.map((file) => (
+            <div 
+              key={`${file.folder || 'root'}-${file.name}`} 
+              className="flex items-center justify-between p-4 rounded-2xl bg-[#f7f5ee] border-2 border-[#161513] shadow-[3px_3px_0px_0px_rgba(22,21,19,1)]"
+            >
+              <span className="text-xs font-black text-black truncate pr-4 max-w-[180px]">{file.name}</span>
+              <div className="flex gap-2">
+                <button 
+                  onClick={async () => {
+                    const url = file.folder
+                      ? `${API_URL}/restore-folder-file/${file.folder}/${file.name}`
+                      : `${API_URL}/restore/${file.name}`;
 
-    await fetch(url, {
-      method: 'POST',
-      headers: getAuthHeaders()
-    });
+                    await fetch(url, {
+                      method: 'POST',
+                      headers: getAuthHeaders()
+                    });
 
-    showToast('Object restored');
-
-    loadFiles();
-    updateBinBadge();
-
-  }}
-  className="px-3 py-1.5 bg-black text-white text-[10px] font-black uppercase tracking-wider rounded-xl shadow-sm"
->
-  Restore
-</button>
-                      </div>
-                    </div>
-                  ))
-                )}
+                    showToast('Object restored');
+                    loadFiles();
+                    updateBinBadge();
+                  }}
+                  className="px-3 py-1.5 bg-white text-[#161513] border-2 border-[#161513] text-[10px] font-black uppercase tracking-wider rounded-xl transition-all duration-100 shadow-[3px_3px_0px_0px_rgba(22,21,19,1)] hover:bg-[#0C5D25] hover:text-white hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[1.5px_1.5px_0px_0px_rgba(22,21,19,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]"
+                >
+                  Restore
+                </button>
               </div>
             </div>
-          </div>
+          ))
         )}
+      </div>
+    </div>
+  </div>
+)}
 
-        {/* ─── FOLDERS MODAL ─── */}
+{/* ─── FOLDERS MODAL ─── */}
 {showFolders && (
   <div
     className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4"
@@ -1113,34 +1187,36 @@ const paginatedFiles = files.slice(startIndex, endIndex);
       
       {/* HEADER */}
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-3xl font-black tracking-tight">
+        <h2 className="text-3xl font-black tracking-tight text-[#161513]">
           Folders
         </h2>
 
+        {/* CLOSE BUTTON WITH CLICK EFFECT */}
         <button
-          onClick={() => setShowFolders(false)}
-          className="text-xl font-black"
-        >
-          ✕
-        </button>
+  onClick={() => setShowFolders(false)}
+  className="w-8 h-8 rounded-lg border-2 border-[#161513] bg-white text-[#161513] font-black flex items-center justify-center text-sm transition-all duration-100 shadow-[3px_3px_0px_0px_rgba(22,21,19,1)] hover:bg-red-500 hover:text-white hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[1.5px_1.5px_0px_0px_rgba(22,21,19,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]"
+>
+  ✕
+</button>
       </div>
 
-      {/* CREATE FOLDER */}
+      {/* CREATE FOLDER SECTION */}
       <div className="flex gap-3 mb-8">
         <input
           type="text"
           value={newFolderName}
           onChange={(e) => setNewFolderName(e.target.value)}
           placeholder="Folder name"
-          className="flex-1 px-4 py-3 rounded-2xl border-2 border-black outline-none font-bold"
+          className="flex-1 px-4 py-3 rounded-2xl border-2 border-[#161513] outline-none font-bold text-sm bg-white focus:bg-slate-50"
         />
 
+        {/* CREATE BUTTON WITH CLICK EFFECT */}
         <button
-          onClick={createFolder}
-          className="px-6 py-3 rounded-2xl bg-black text-white font-black uppercase text-xs"
-        >
-          Create
-        </button>
+  onClick={createFolder}
+  className="px-6 py-3 rounded-2xl border-2 border-[#161513] bg-white text-[#161513] font-black uppercase text-xs tracking-wider transition-all shadow-[4px_4px_0px_0px_rgba(22,21,19,1)] hover:bg-slate-50 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0px_0px_rgba(22,21,19,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]"
+>
+  Create
+</button>
       </div>
 
       {/* FOLDERS GRID */}
@@ -1151,29 +1227,33 @@ const paginatedFiles = files.slice(startIndex, endIndex);
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5">
           {folders.map((folder) => (
+            /* FOLDER CARD WITH INDEPENDENT CLICK EFFECT */
             <div
               key={folder.name}
-              onClick={() => openFolder(folder.name)}
-              className="cursor-pointer bg-[#f7f5ee] border-2 border-[#161513] rounded-[1.7rem] p-5 flex flex-col items-center justify-center hover:-translate-y-1 transition shadow-[4px_4px_0px_0px_rgba(22,21,19,1)]"
+             onClick={() => openFolder(folder.name)}
+  className="cursor-pointer bg-[#f7f5ee] border-2 border-[#161513] rounded-[1.7rem] p-5 flex flex-col items-center justify-center transition-all duration-100 shadow-[4px_4px_0px_0px_rgba(22,21,19,1)] hover:bg-[#faf9f5] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0px_0px_rgba(22,21,19,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]"
             >
               
-              {/* FOLDER ICON */}
+              {/* FOLDER ICON WITH THICKER GRAPHIC OUTLINE */}
               <svg
                 viewBox="0 0 24 24"
-                className="w-16 h-16 mb-3 fill-[#f4c542] stroke-black"
-                strokeWidth="1.8"
+                className="w-16 h-16 mb-3 fill-[#f4c542] stroke-[#161513]"
+                strokeWidth="1.0"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               >
                 <path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z" />
               </svg>
 
               {/* FOLDER NAME */}
-              <span className="text-sm font-black text-center break-all">
+              <span className="text-sm font-black text-center break-all text-[#161513]">
                 {folder.name}
               </span>
             </div>
           ))}
         </div>
       )}
+      
     </div>
   </div>
 )}
