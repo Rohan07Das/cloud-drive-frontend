@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation'; // Imported for internal redirection
-import DotGrid from '@/components/DotGrid';
 import { Space_Grotesk } from 'next/font/google';
 
 const spaceGrotesk = Space_Grotesk({ 
@@ -15,7 +14,7 @@ export default function Home() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [botMessage, setBotMessage] = useState<string | null>(null);
-  const [messageColor, setMessageColor] = useState<'text-emerald-500' | 'text-red-500' | 'text-amber-500'>('text-emerald-500');
+  const [messageColor, setMessageColor] = useState<'bg-[#0DE4B9]' | 'bg-red-400' | 'bg-amber-400'>('bg-[#0DE4B9]');
 
   const messageTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -35,8 +34,8 @@ export default function Home() {
     // 1. EMPTY FIELD CHECK
     if (!email.trim() || !password.trim()) {
       setTimeout(() => {
-        setBotMessage("Beep! Please enter both your ID and password.");
-        setMessageColor('text-amber-500');
+        setBotMessage("SYSTEM ALERT: Enter both your ID and password keys.");
+        setMessageColor('bg-amber-400');
         messageTimeoutRef.current = setTimeout(() => setBotMessage(null), 4000);
       }, 50);
       return; 
@@ -44,8 +43,8 @@ export default function Home() {
 
     // 2. SHOW LOADING STATE
     setTimeout(() => {
-      setBotMessage("Connecting to secure server...");
-      setMessageColor('text-emerald-500');
+      setBotMessage("Connecting to secure transmission cluster...");
+      setMessageColor('bg-[#0DE4B9]');
     }, 50);
 
     try {
@@ -62,8 +61,8 @@ export default function Home() {
 
       if (response.ok) {
         // 4. SUCCESS: STORE TOKEN AND TRANSITION INTERNALLY
-        setBotMessage("Access Granted! Teleporting to dashboard...");
-        setMessageColor('text-emerald-500');
+        setBotMessage("Access Granted! Triggering console teleportation...");
+        setMessageColor('bg-[#0DE4B9]');
 
         // Save the received token securely to localStorage for your dashboard to grab
         localStorage.setItem('cloud_token', data.token);
@@ -75,134 +74,139 @@ export default function Home() {
 
       } else {
         // 5. REJECTED LOGIN (Wrong password, etc.)
-        setBotMessage(data.error || "Oops! Invalid ID or password.");
-        setMessageColor('text-red-500');
+        setBotMessage(data.error || "Access Denied: Invalid ID or password.");
+        setMessageColor('bg-red-400');
         messageTimeoutRef.current = setTimeout(() => setBotMessage(null), 4000);
       }
 
     } catch (error) {
       // 6. SERVER IS OFFLINE
-      setBotMessage("Error: Could not reach the server.");
-      setMessageColor('text-red-500');
+      setBotMessage("Fatal Error: Could not establish server handshake.");
+      setMessageColor('bg-red-400');
       messageTimeoutRef.current = setTimeout(() => setBotMessage(null), 4000);
     }
   };
 
   return (
-    <main className={`relative flex min-h-screen items-center justify-center bg-[#ffffff] overflow-hidden antialiased ${spaceGrotesk.className}`}>
+    <main className={`relative flex min-h-screen items-center justify-start bg-[#FFFFFF] overflow-hidden antialiased p-6 md:p-20 ${spaceGrotesk.className}`}>
       
       <style>{`
         @keyframes slidePop {
-          0% { opacity: 0; transform: translateY(15px) scale(0.9); }
-          70% { transform: translateY(-2px) scale(1.02); }
+          0% { opacity: 0; transform: translateY(-15px) scale(0.95); }
+          70% { transform: translateY(2px) scale(1.01); }
           100% { opacity: 1; transform: translateY(0) scale(1); }
         }
         .animate-slide-pop {
-          animation: slidePop 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-          transform-origin: bottom left;
+          animation: slidePop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
       `}</style>
 
-      {/* --- THE BACKGROUND --- */}
-      <div className="absolute inset-0 z-0">
-        <DotGrid
-          dotSize={2.5}
-          gap={18}
-          baseColor="#0de4b9"
-          activeColor="#000000"
-          proximity={70}
-          shockRadius={200}
-          shockStrength={7}
-          resistance={650}
-          returnDuration={1.7}
-        />
-      </div>
+      {/* --- STICKER BOMB IMAGE POSITIONED EXCLUSIVELY ON THE RIGHT SIDE --- */}
+      <div 
+        className="hidden md:block absolute right-16 top-0 bottom-0 w-[45%] bg-cover bg-center bg-no-repeat z-0"
+        style={{ backgroundImage: `url('https://r4.wallpaperflare.com/wallpaper/798/118/422/sticker-bomb-sticks-bombs-wallpaper-00133d613f3f4a18ecaab94d0666fcb1.jpg')` }}
+      />
 
-      {/* --- THE LOGIN OVERLAY --- */}
-      <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none px-4">
+      {/* --- FORM CONTAINER FIXED TO THE LEFT SIDE --- */}
+      <div className="w-full max-w-[440px] flex flex-col items-center relative z-10 md:ml-10">
         
+        {/* --- BRAND TITLE HEADER --- */}
+        <div className="mb-6 transform hover:scale-105 transition-transform duration-200 border-4 border-black bg-white shadow-[5px_5px_0px_#000000] px-6 py-2.5 rounded-2xl">
+          <h1 className="text-xl md:text-2xl font-bold text-black text-center tracking-tight uppercase select-none">
+            USER SIGN IN
+          </h1>
+        </div>
+
+        {/* --- SYSTEM NOTIFICATION HEADER FEED --- */}
+        {botMessage && (
+          <div className={`w-full mb-4 ${messageColor} border-4 border-black shadow-[4px_4px_0px_#000000] rounded-2xl px-5 py-3 animate-slide-pop text-center`}>
+            <p className="text-xs font-bold font-mono uppercase tracking-wide text-black">
+              {botMessage}
+            </p>
+          </div>
+        )}
+
+        {/* --- MAIN ACTION FORM CONTAINER --- */}
         <form 
           onSubmit={handleLogin}
           noValidate 
-          className="w-full max-w-[420px] p-10 rounded-[2rem] bg-white border border-slate-100 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] pointer-events-auto flex flex-col relative"
+          className="w-full p-8 md:p-10 rounded-[2.5rem] bg-white border-4 border-black shadow-[8px_8px_0px_#000000] flex flex-col relative transition-all duration-300"
         >
           
-          {/* --- THE CHARACTER & SPEECH BUBBLE --- */}
-          <div className="relative flex justify-center mb-6 mt-4">
+          {/* --- DATA INPUT TARGET FIELDS --- */}
+          <div className="space-y-6">
             
-            {botMessage && (
-              <div className="absolute -top-9 -right-2 sm:-right-0 bg-white border-2 border-slate-100 shadow-xl rounded-2xl px-4 py-2.5 z-20 w-max max-w-[160px] text-center animate-slide-pop">
-                <p className={`text-xs font-bold leading-tight ${messageColor}`}>
-                  {botMessage}
-                </p>
-                <div className="absolute bottom-[-6px] left-4 w-3 h-3 bg-white border-b-2 border-r-2 border-slate-100 transform rotate-45"></div>
-              </div>
-            )}
-
-            <div className="relative w-20 h-20 rounded-3xl bg-slate-50 flex items-center justify-center border-2 border-slate-100 shadow-inner overflow-hidden group">
-              <div className="absolute bottom-[-10px] w-14 h-12 bg-[#0de4b9] rounded-t-2xl transition-transform duration-300 group-hover:translate-y-[-5px]"></div>
-              
-              <div className="absolute top-8 flex space-x-3">
-                <div className="w-2.5 h-3 bg-slate-800 rounded-full animate-bounce" style={{ animationDuration: '2s' }}></div>
-                <div className="w-2.5 h-3 bg-slate-800 rounded-full animate-bounce" style={{ animationDelay: '0.2s', animationDuration: '2s' }}></div>
-              </div>
-              
-              <div className="absolute top-2 w-2.5 h-2.5 bg-[#0de4b9] rounded-full shadow-[0_0_8px_#0de4b9] animate-pulse"></div>
-              <div className="absolute top-4 w-0.5 h-3 bg-slate-300"></div>
-            </div>
-          </div>
-
-          <h1 className="text-3xl font-bold text-slate-900 text-center tracking-tighter mb-8 uppercase">
-            Welcome Back
-          </h1>
-
-          <div className="space-y-5">
+            {/* EMAIL INPUT BLOCK */}
             <div className="relative">
-              <label className="sr-only" htmlFor="email">Email</label>
-              <input 
-                type="email" 
-                id="email" 
-                value={email}
-                onChange={(e) => setEmail(e.target.value)} 
-                suppressHydrationWarning
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-4 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0de4b9] focus:bg-white transition-all font-medium text-sm"
-                placeholder="Enter your email"
-              />
+              <label className="block text-[11px] font-bold tracking-widest text-[#1a1a1a] uppercase font-mono mb-2" htmlFor="email">
+                IDENTITY NAME DESCRIPTOR // EMAIL
+              </label>
+              
+              <div className="relative w-full group">
+                <input 
+                  type="email" 
+                  id="email" 
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)} 
+                  suppressHydrationWarning
+                  className="w-full bg-white border-4 border-black rounded-2xl pl-5 pr-14 py-3.5 text-black placeholder-slate-400 font-bold text-sm shadow-[4px_4px_0px_#000000] transition-all duration-200 focus:outline-none focus:bg-[#FAF6EE] focus:shadow-[6px_6px_0px_#000000] focus:-translate-x-0.5 focus:-translate-y-0.5 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_#000000]"
+                  placeholder="Enter registered email address"
+                />
+                
+                {/* Clear Email Button */}
+                {email && (
+                  <button
+                    type="button"
+                    onClick={() => setEmail('')}
+                    className="absolute top-1/2 right-4 -translate-y-1/2 w-6 h-6 rounded-lg border-2 border-[#161513] bg-white flex items-center justify-center font-black text-xs text-[#161513] pointer-events-auto z-20 transition-all duration-100 shadow-[2px_2px_0px_0px_rgba(22,21,19,1)] group-hover:-translate-x-0.5 group-hover:translate-y-[-55%] group-hover:shadow-[3px_3px_0px_0px_rgba(22,21,19,1)] group-focus-within:-translate-x-0.5 group-focus-within:translate-y-[-55%] group-focus-within:shadow-[3px_3px_0px_0px_rgba(22,21,19,1)] hover:bg-red-500 hover:text-white hover:!translate-x-0 hover:!translate-y-[-40%] hover:shadow-[1px_1px_0px_0px_rgba(22,21,19,1)] active:!translate-x-[2px] active:!translate-y-[-30%] active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]"
+                    title="Remove Task"
+                  >
+                    ✕
+                  </button>
+                )}
+              </div>
             </div>
 
+            {/* PASSWORD INPUT BLOCK */}
             <div className="relative">
-              <label className="sr-only" htmlFor="password">Password</label>
-              <input 
-                type="password" 
-                id="password" 
-                value={password}
-                onChange={(e) => setPassword(e.target.value)} 
-                suppressHydrationWarning
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-4 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0de4b9] focus:bg-white transition-all font-medium text-sm"
-                placeholder="Enter your password"
-              />
+              <label className="block text-[11px] font-bold tracking-widest text-[#1a1a1a] uppercase font-mono mb-2" htmlFor="password">
+                ACCESS CIPHER KEY // PASSWORD
+              </label>
+              
+              <div className="relative w-full group">
+                <input 
+                  type="password" 
+                  id="password" 
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)} 
+                  suppressHydrationWarning
+                  className="w-full bg-white border-4 border-black rounded-2xl pl-5 pr-14 py-3.5 text-black placeholder-slate-400 font-bold text-sm shadow-[4px_4px_0px_#000000] transition-all duration-200 focus:outline-none focus:bg-[#FAF6EE] focus:shadow-[6px_6px_0px_#000000] focus:-translate-x-0.5 focus:-translate-y-0.5 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_#000000]"
+                  placeholder="Enter authentication key"
+                />
+
+                {/* Clear Password Button */}
+                {password && (
+                  <button
+                    type="button"
+                    onClick={() => setPassword('')}
+                    className="absolute top-1/2 right-4 -translate-y-1/2 w-6 h-6 rounded-lg border-2 border-[#161513] bg-white flex items-center justify-center font-black text-xs text-[#161513] pointer-events-auto z-20 transition-all duration-100 shadow-[2px_2px_0px_0px_rgba(22,21,19,1)] group-hover:-translate-x-0.5 group-hover:translate-y-[-55%] group-hover:shadow-[3px_3px_0px_0px_rgba(22,21,19,1)] group-focus-within:-translate-x-0.5 group-focus-within:translate-y-[-55%] group-focus-within:shadow-[3px_3px_0px_0px_rgba(22,21,19,1)] hover:bg-red-500 hover:text-white hover:!translate-x-0 hover:!translate-y-[-40%] hover:shadow-[1px_1px_0px_0px_rgba(22,21,19,1)] active:!translate-x-[2px] active:!translate-y-[-30%] active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]"
+                    title="Remove Task"
+                  >
+                    ✕
+                  </button>
+                )}
+              </div>
             </div>
+            
           </div>
 
-          <div className="flex items-center justify-between text-xs text-slate-500 mt-6 font-medium tracking-wide">
-            <label className="flex items-center gap-2 cursor-pointer hover:text-slate-800 transition-colors">
-              <input type="checkbox" className="w-4 h-4 rounded bg-white border-slate-300 text-[#0de4b9] focus:ring-0 focus:ring-offset-0 cursor-pointer" />
-              <span>Remember me</span>
-            </label>
-            <a href="#" className="text-slate-500 hover:text-[#0de4b9] transition-colors">Forgot password?</a>
-          </div>
-
+          {/* --- PRIMARY ROUTING TRANSMISSION BUTTON --- */}
           <button 
             type="submit" 
-            className="w-full mt-8 py-4 bg-[#0de4b9] hover:bg-[#0bc29d] text-white font-bold text-base tracking-[0.15em] uppercase rounded-xl transition-all duration-300 shadow-[0_8px_20px_rgba(13,228,185,0.25)] hover:shadow-[0_12px_25px_rgba(13,228,185,0.4)] hover:-translate-y-1"
+            className="w-full mt-8 py-4 bg-[#4F62F9] text-white font-bold text-sm tracking-widest uppercase border-4 border-black rounded-2xl shadow-[4px_4px_0px_#000000] hover:shadow-[2px_2px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] active:shadow-none active:translate-x-[4px] active:translate-y-[4px] transition-all duration-150 ease-out"
           >
-            Sign In
+            SIGN IN
           </button>
-          
-          <p className="text-center text-xs text-slate-500 mt-8 font-medium">
-            Don't have an account?{' '}
-            <a href="#" className="text-[#0de4b9] hover:text-[#0bc29d] transition-colors font-bold tracking-wider uppercase">Register</a>
-          </p>
           
         </form>
       </div>
