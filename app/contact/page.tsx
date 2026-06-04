@@ -46,15 +46,12 @@ export default function ContactPage() {
     // Dynamic environmental resolution for localhost or server environments
     const BACKEND_ENDPOINT = process.env.NEXT_PUBLIC_BACKEND_URL || "http://127.0.0.1:5000/api/contact"; 
 
-    // Grab active login token from storage array
-    const token = typeof window !== 'undefined' ? localStorage.getItem('cloud_token') : null;
-
     try {
       const response = await fetch(BACKEND_ENDPOINT, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}` // Pass token securely inside standard header
+          "Content-Type": "application/json"
+          // Removed standard Authorization headers since the contact endpoint is public
         },
         body: JSON.stringify(formState),
       });
