@@ -25,6 +25,12 @@ export default function ContactPage() {
   const [formState, setFormState] = useState({ name: '', email: '', message: '' });
   const [isAccountOpen, setIsAccountOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false); // Loader state
+  const [toast, setToast] = useState<{ show: boolean; message: string; isError: boolean }>({
+    show: false,
+    message: '',
+    isError: false
+  });
+  
   const [username, setUsername] = useState(() => {
     if (typeof window !== 'undefined') {
       return localStorage.getItem('cloud_username') || 'Guest';
@@ -38,12 +44,20 @@ export default function ContactPage() {
     router.push('/');
   };
 
+  // Helper to trigger custom bottom-right toast popups
+  const triggerToast = (message: string, isError: boolean = false) => {
+    setToast({ show: true, message, isError });
+    setTimeout(() => {
+      setToast(prev => ({ ...prev, show: false }));
+    }, 4000);
+  };
+
   // ─── CONNECTED API PIPELINE ACTION ───
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-// 1. Resolve the base domain name securely and strip any accidental trailing slashes
+    // 1. Resolve the base domain name securely and strip any accidental trailing slashes
     const baseUrl = (process.env.NEXT_PUBLIC_BACKEND_URL || "http://127.0.0.1:5000").replace(/\/$/, "");
     
     // 2. Explicitly append the routing path so it targets the correct endpoint
@@ -62,14 +76,14 @@ export default function ContactPage() {
       const data = await response.json();
 
       if (response.ok) {
-        alert("✨ Message encryption dispatched successfully into transmission buffers! Check your email.");
+        triggerToast("✨ Message encryption dispatched successfully into transmission buffers! Check your email.", false);
         setFormState({ name: '', email: '', message: '' });
       } else {
-        alert(`❌ Gateway Error: ${data.details || data.error || JSON.stringify(data)}`);
+        triggerToast(`❌ Gateway Error: ${data.details || data.error || JSON.stringify(data)}`, true);
       }
     } catch (error) {
       console.error("Transmission interruption:", error);
-      alert("💥 System network error. Verify that your backend server is up and routing properly.");
+      triggerToast("💥 System network error. Verify that your backend server is up and routing properly.", true);
     } finally {
       setIsSubmitting(false);
     }
@@ -297,6 +311,26 @@ export default function ContactPage() {
           </form>
         </div>
       </main>
+
+      {/* ─── CUSTOM NEO-BRUTALIST TOAST NOTIFICATION ─── */}
+      {toast.show && (
+        <div className={`fixed bottom-6 right-6 z-[999999] flex items-center gap-3 border-2 border-[#161513] px-5 py-4 rounded-2xl shadow-[4px_4px_0px_0px_rgba(22,21,19,1)] animate-bounce-short transition-all ${
+          toast.isError ? 'bg-[#ebd2cc] text-[#111111]' : 'bg-[#f7f5ee] text-[#111111]'
+        }`}>
+          <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-xl border-2 border-[#161513] bg-white text-xs font-black">
+            {toast.isError ? "✕" : "✓"}
+          </div>
+          <div className="text-xs font-black uppercase tracking-wide max-w-sm">
+            {toast.message}
+          </div>
+          <button 
+            onClick={() => setToast(prev => ({ ...prev, show: false }))}
+            className="ml-2 text-xs font-black opacity-40 hover:opacity-100 transition-opacity"
+          >
+            ✕
+          </button>
+        </div>
+      )}
     </div>
   );
 }
