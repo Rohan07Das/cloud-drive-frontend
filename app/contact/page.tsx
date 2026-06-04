@@ -43,8 +43,11 @@ export default function ContactPage() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Dynamic environmental resolution for localhost or server environments
-    const BACKEND_ENDPOINT = process.env.NEXT_PUBLIC_BACKEND_URL || "http://127.0.0.1:5000/api/contact"; 
+// 1. Resolve the base domain name securely and strip any accidental trailing slashes
+    const baseUrl = (process.env.NEXT_PUBLIC_BACKEND_URL || "http://127.0.0.1:5000").replace(/\/$/, "");
+    
+    // 2. Explicitly append the routing path so it targets the correct endpoint
+    const BACKEND_ENDPOINT = `${baseUrl}/api/contact`;
 
     try {
       const response = await fetch(BACKEND_ENDPOINT, {
