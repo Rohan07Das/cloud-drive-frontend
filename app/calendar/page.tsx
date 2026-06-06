@@ -266,11 +266,11 @@ export default function CalendarPage() {
                   <div className="min-w-0"><p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Account</p><h4 className="text-sm font-black text-[#161513] truncate">Rohan</h4></div>
                 </div>
                 <button 
-  onClick={logout} 
-  className="mt-4 w-full py-3 rounded-2xl border-2 border-[#161513] bg-white text-[#161513] text-xs font-black uppercase tracking-[0.18em] transition-all shadow-[4px_4px_0px_0px_rgba(22,21,19,1)] hover:bg-red-500 hover:text-white hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0px_0px_rgba(22,21,19,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]"
->
-  Logout
-</button>
+                  onClick={logout} 
+                  className="mt-4 w-full py-3 rounded-2xl border-2 border-[#161513] bg-white text-[#161513] text-xs font-black uppercase tracking-[0.18em] transition-all shadow-[4px_4px_0px_0px_rgba(22,21,19,1)] hover:bg-red-500 hover:text-white hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0px_0px_rgba(22,21,19,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]"
+                >
+                  Logout
+                </button>
               </div>
             )}
           </div>
@@ -302,13 +302,13 @@ export default function CalendarPage() {
             {/* MONTH & YEAR NAVIGATION */}
             <div className="flex items-center gap-4">
               <button 
-  onClick={handlePrevMonth}
-  className="w-10 h-10 rounded-xl border-2 border-[#161513] bg-white flex items-center justify-center transition-all duration-100 shadow-[3px_3px_0px_0px_rgba(22,21,19,1)] hover:bg-slate-50 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[1.5px_1.5px_0px_0px_rgba(22,21,19,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)] shrink-0"
->
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#161513" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M15 18l-6-6 6-6"/>
-  </svg>
-</button>
+                onClick={handlePrevMonth}
+                className="w-10 h-10 rounded-xl border-2 border-[#161513] bg-white flex items-center justify-center transition-all duration-100 shadow-[3px_3px_0px_0px_rgba(22,21,19,1)] hover:bg-slate-50 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[1.5px_1.5px_0px_0px_rgba(22,21,19,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)] shrink-0"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#161513" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M15 18l-6-6 6-6"/>
+                </svg>
+              </button>
               
               <h3 className="text-2xl sm:text-3xl font-black tracking-tight uppercase text-[#161513] w-[220px] sm:w-[320px] text-center shrink-0">
                 {months[currentMonth]} {currentYear}
@@ -324,78 +324,77 @@ export default function CalendarPage() {
 
             {/* SIZE SELECTOR BUTTONS */}
             <div className="flex bg-[#f7f5ee] p-1.5 rounded-xl border-2 border-[#161513] items-center gap-2 text-[10px] font-black tracking-wider uppercase shadow-[3px_3px_0px_0px_rgba(22,21,19,1)]">
-    <button 
-  onClick={() => setCardSize('sm')} 
-  className={`w-8 h-8 rounded-lg font-black text-xs transition-all duration-100 border-2 border-[#161513] ${
-    cardSize === 'sm' 
-      ? 'bg-[#161513] text-white translate-x-1 translate-y-1 shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]' 
-      : 'bg-white text-[#161513] shadow-[2px_2px_0px_0px_rgba(22,21,19,1)] hover:bg-slate-50 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[1px_1px_0px_0px_rgba(22,21,19,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]'
-  }`}
->
-  S
-</button>
+              <button 
+                onClick={() => setCardSize('sm')} 
+                className={`w-8 h-8 rounded-lg font-black text-xs transition-all duration-100 border-2 border-[#161513] ${
+                  cardSize === 'sm' 
+                    ? 'bg-[#161513] text-white translate-x-1 translate-y-1 shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]' 
+                    : 'bg-white text-[#161513] shadow-[2px_2px_0px_0px_rgba(22,21,19,1)] hover:bg-slate-50 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[1px_1px_0px_0px_rgba(22,21,19,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]'
+                }`}
+              >
+                S
+              </button>
 
-<button 
-  onClick={() => setCardSize('md')} 
-  className={`w-8 h-8 rounded-lg font-black text-xs transition-all duration-100 border-2 border-[#161513] ${
-    cardSize === 'md' 
-      ? 'bg-[#161513] text-white translate-x-1 translate-y-1 shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]' 
-      : 'bg-white text-[#161513] shadow-[2px_2px_0px_0px_rgba(22,21,19,1)] hover:bg-slate-50 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[1px_1px_0px_0px_rgba(22,21,19,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]'
-  }`}
->
-  M
-</button>
+              <button 
+                onClick={() => setCardSize('md')} 
+                className={`w-8 h-8 rounded-lg font-black text-xs transition-all duration-100 border-2 border-[#161513] ${
+                  cardSize === 'md' 
+                    ? 'bg-[#161513] text-white translate-x-1 translate-y-1 shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]' 
+                    : 'bg-white text-[#161513] shadow-[2px_2px_0px_0px_rgba(22,21,19,1)] hover:bg-slate-50 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[1px_1px_0px_0px_rgba(22,21,19,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]'
+                }`}
+              >
+                M
+              </button>
 
-<button 
-  onClick={() => setCardSize('lg')} 
-  className={`w-8 h-8 rounded-lg font-black text-xs transition-all duration-100 border-2 border-[#161513] ${
-    cardSize === 'lg' 
-      ? 'bg-[#161513] text-white translate-x-1 translate-y-1 shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]' 
-      : 'bg-white text-[#161513] shadow-[2px_2px_0px_0px_rgba(22,21,19,1)] hover:bg-slate-50 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[1px_1px_0px_0px_rgba(22,21,19,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]'
-  }`}
->
-  L
-</button>
-  </div>
+              <button 
+                onClick={() => setCardSize('lg')} 
+                className={`w-8 h-8 rounded-lg font-black text-xs transition-all duration-100 border-2 border-[#161513] ${
+                  cardSize === 'lg' 
+                    ? 'bg-[#161513] text-white translate-x-1 translate-y-1 shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]' 
+                    : 'bg-white text-[#161513] shadow-[2px_2px_0px_0px_rgba(22,21,19,1)] hover:bg-slate-50 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[1px_1px_0px_0px_rgba(22,21,19,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]'
+                }`}
+              >
+                L
+              </button>
+            </div>
           </div>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-8 items-start">
-          {/* SIDE SCHEDULE CARD WITH REAL-TIME TASK CREATION TRIGGERS */}
+          {/* SIDE SCHEDULE CARD WITH SCROLLBAR INTEGRATION */}
           <div className="w-full lg:w-[320px] shrink-0 bg-white border-2 border-[#161513] rounded-[2rem] p-6 shadow-[5px_5px_0px_0px_rgba(22,21,19,1)]">
             <div className="flex items-center justify-between gap-4 mb-4">
               <h3 className="text-2xl font-black tracking-tight text-slate-900">Tasks</h3>
               
               {/* TRIGGER ADD MODAL ACTION ICON BUTTON */}
               <button 
-  onClick={() => setIsModalOpen(true)}
-  className="w-8 h-8 rounded-lg border-2 border-[#161513] bg-white flex items-center justify-center transition-all duration-100 shadow-[3px_3px_0px_0px_rgba(22,21,19,1)] hover:bg-slate-50 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[1.5px_1.5px_0px_0px_rgba(22,21,19,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]"
-  title="Add task node descriptor"
->
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#161513" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
-    <line x1="12" y1="5" x2="12" y2="19"></line>
-    <line x1="5" y1="12" x2="19" y2="12"></line>
-  </svg>
-</button>
+                onClick={() => setIsModalOpen(true)}
+                className="w-8 h-8 rounded-lg border-2 border-[#161513] bg-white flex items-center justify-center transition-all duration-100 shadow-[3px_3px_0px_0px_rgba(22,21,19,1)] hover:bg-slate-50 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[1.5px_1.5px_0px_0px_rgba(22,21,19,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]"
+                title="Add task node descriptor"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#161513" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+              </button>
             </div>
 
-            {/* Render items list conditional tracker logic blocks */}
+            {/* --- ADDED OVERFLOW CONTAINER LAYER FOR VERTICAL SCROLL ALIGNMENT --- */}
             {currentMonthEvents.length > 0 ? (
-              <div className="space-y-4">
+              <div className="max-h-[340px] overflow-y-auto pr-1 space-y-4 [scrollbar-gutter:stable]">
                 {currentMonthEvents.map((ev, idx) => (
                   <div key={idx} className={`relative group p-4 pr-10 rounded-xl border-2 border-[#161513] shadow-[3px_3px_0px_0px_rgba(22,21,19,1)] ${ev.track}`}>
                     <span className="text-[10px] font-black uppercase tracking-widest opacity-60">Day {ev.day}</span>
                     <h4 className="text-sm font-black tracking-tight mt-0.5">{ev.title}</h4>
                     
                     {/* Realtime Remove Button */}
-                    {/* REPLACE THE OLD TRASH CAN BUTTON WITH THIS UPGRADED ABSOLUTE DELETE ACTION */}
-<button
-  onClick={() => handleRemoveTask(ev)}
-  className="absolute top-2 right-2.5 w-6 h-6 rounded-lg border-2 border-[#161513] bg-white flex items-center justify-center font-black text-xs text-[#161513] transition-all duration-100 shadow-[2px_2px_0px_0px_rgba(22,21,19,1)] hover:bg-red-500 hover:text-white hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[1px_1px_0px_0px_rgba(22,21,19,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]"
-  title="Remove Task"
->
-  ✕
-</button>
+                    <button
+                      onClick={() => handleRemoveTask(ev)}
+                      className="absolute top-2 right-2.5 w-6 h-6 rounded-lg border-2 border-[#161513] bg-white flex items-center justify-center font-black text-xs text-[#161513] transition-all duration-100 shadow-[2px_2px_0px_0px_rgba(22,21,19,1)] hover:bg-red-500 hover:text-white hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[1px_1px_0px_0px_rgba(22,21,19,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]"
+                      title="Remove Task"
+                    >
+                      ✕
+                    </button>
                   </div>
                 ))}
               </div>
@@ -497,11 +496,11 @@ export default function CalendarPage() {
             <div className="flex items-center justify-between border-b-2 border-[#161513] pb-4 mb-6">
               <h3 className="text-2xl font-black uppercase tracking-tight text-[#161513]">Create Task Node</h3>
               <button
-  onClick={() => setIsModalOpen(false)}
-  className="w-8 h-8 rounded-lg border-2 border-[#161513] bg-white text-[#161513] font-black flex items-center justify-center text-sm transition-all duration-100 shadow-[3px_3px_0px_0px_rgba(22,21,19,1)] hover:bg-red-500 hover:text-white hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[1.5px_1.5px_0px_0px_rgba(22,21,19,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]"
->
-  ✕
-</button>
+                onClick={() => setIsModalOpen(false)}
+                className="w-8 h-8 rounded-lg border-2 border-[#161513] bg-white text-[#161513] font-black flex items-center justify-center text-sm transition-all duration-100 shadow-[3px_3px_0px_0px_rgba(22,21,19,1)] hover:bg-red-500 hover:text-white hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[1.5px_1.5px_0px_0px_rgba(22,21,19,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]"
+              >
+                ✕
+              </button>
             </div>
             <form onSubmit={handleAddTaskSubmit} className="space-y-5">
               <div className="space-y-1.5">
@@ -546,31 +545,31 @@ export default function CalendarPage() {
                 <div className="flex gap-3">
                   {colorTracks.map((color) => (
                     <button
-  key={color.value}
-  type="button"
-  onClick={() => setNewTaskColor(color.value)}
-  className={`w-10 h-10 rounded-xl border-2 border-[#161513] transition-all duration-100 relative ${color.value} ${
-    newTaskColor === color.value
-      ? 'translate-x-1 translate-y-1 shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]'
-      : 'shadow-[3px_3px_0px_0px_rgba(22,21,19,1)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[1.5px_1.5px_0px_0px_rgba(22,21,19,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]'
-  }`}
-  title={color.label}
->
-  {newTaskColor === color.value && (
-    <span className="absolute inset-0 flex items-center justify-center font-black text-s">✓</span>
-  )}
-</button>
+                      key={color.value}
+                      type="button"
+                      onClick={() => setNewTaskColor(color.value)}
+                      className={`w-10 h-10 rounded-xl border-2 border-[#161513] transition-all duration-100 relative ${color.value} ${
+                        newTaskColor === color.value
+                          ? 'translate-x-1 translate-y-1 shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]'
+                          : 'shadow-[3px_3px_0px_0px_rgba(22,21,19,1)] hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[1.5px_1.5px_0px_0px_rgba(22,21,19,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]'
+                      }`}
+                      title={color.label}
+                    >
+                      {newTaskColor === color.value && (
+                        <span className="absolute inset-0 flex items-center justify-center font-black text-s">✓</span>
+                      )}
+                    </button>
                   ))}
                 </div>
               </div>
 
               <div className="pt-2">
                 <button 
-  type="submit" 
-  className="w-full py-4 rounded-xl bg-white text-[#161513] border-2 border-[#161513] font-black text-xs uppercase tracking-widest transition-all duration-100 shadow-[4px_4px_0px_0px_rgba(22,21,19,1)] hover:bg-slate-50 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0px_0px_rgba(22,21,19,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]"
->
-  Commit Realtime Entry
-</button>
+                  type="submit" 
+                  className="w-full py-4 rounded-xl bg-white text-[#161513] border-2 border-[#161513] font-black text-xs uppercase tracking-widest transition-all duration-100 shadow-[4px_4px_0px_0px_rgba(22,21,19,1)] hover:bg-slate-50 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0px_0px_rgba(22,21,19,1)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(22,21,19,1)]"
+                >
+                  Commit Realtime Entry
+                </button>
               </div>
             </form>
           </div>
